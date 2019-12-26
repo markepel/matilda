@@ -7,6 +7,7 @@ from imutils.video import VideoStream
 server_socket = socket.socket()
 server_socket.bind(('0.0.0.0', 8000))
 server_socket.listen(0)
+
 while True:
     
     print('Listening...')
@@ -34,7 +35,8 @@ while True:
         print('Exception')
         connection.close()
         try:
-            server_socket.close()
+            pass
+            #server_socket.close()
         except:
             print('Error in except server socket.close')
         print('connection closed, listening')
