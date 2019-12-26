@@ -31,7 +31,7 @@ try:
                     #player.stdin.write(data)
 except:
     print('Exception')
-    #connection.close()
+    connection.close()
     print('connection closed, listening')
     #server_socket.listen(0)
     print('after listen')
