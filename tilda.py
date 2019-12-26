@@ -13,8 +13,9 @@ print('Listening...')
 connection = server_socket.accept()[0].makefile('rb')
 print('connection accepted')
 
-while True:
-    try:
+
+try:
+    while True:
         # Run a viewer with an appropriate command line. Uncomment the mplayer
             # version if you would prefer to use mplayer instead of VLC
                 #cmdline = ['vlc', '--demux', 'h264', '-']
@@ -28,18 +29,18 @@ while True:
             raise Exception()
         print('Data recieved, data_format=={}'.format(type(data)))
                     #player.stdin.write(data)
-    except:
-        print('Exception')
-        connection.close()
-        print('connection closed, listening')
-        server_socket.listen(0)
-        print('after listen')
-        connection = server_socket.accept()[0].makefile('rb')
-        print('new connection')
-        continue
-    finally:
-        connection.close()
-        server_socket.close()
+except:
+    print('Exception')
+    #connection.close()
+    print('connection closed, listening')
+    #server_socket.listen(0)
+    print('after listen')
+    #connection = server_socket.accept()[0].makefile('rb')
+    print('new connection')
+    
+finally:
+    connection.close()
+    server_socket.close()
 
         #player.terminate()
 
