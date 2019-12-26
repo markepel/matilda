@@ -1,8 +1,12 @@
 import socket
 import subprocess
 from imutils.video import VideoStream
+from flask import Response
+from flask import Flask
+from flask import render_template
 # Start a socket listening for connections on 0.0.0.0:8000 (0.0.0.0 means
 # all interfaces)
+app = Flask(__name__)
 
 server_socket = socket.socket()
 server_socket.bind(('0.0.0.0', 8000))
@@ -29,7 +33,7 @@ while True:
             data = connection.read(1024)
             if not data:
                 raise Exception()
-            print('Data recieved, data_format=={}'.format(type(data)))
+            print('Data recieved, data_format=={}, data=={}'.format(type(data), data))
                         #player.stdin.write(data)
     except:
         print('Exception')
