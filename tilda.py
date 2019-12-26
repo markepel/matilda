@@ -6,8 +6,9 @@ from imutils.video import VideoStream
 
 server_socket = socket.socket()
 server_socket.bind(('0.0.0.0', 8000))
+server_socket.listen(0)
 while True:
-    server_socket.listen(0)
+    
     print('Listening...')
     # Accept a single connection and make a file-like object out of it
     #connection = server_socket.accept()[0].makefile('rb')
