@@ -16,24 +16,12 @@ server_socket.bind(('0.0.0.0', 8000))
 server_socket.listen(0)
 
 while True:
-    
     print('Listening...')
-    # Accept a single connection and make a file-like object out of it
-    #connection = server_socket.accept()[0].makefile('rb')
-
     connection = server_socket.accept()[0].makefile('rb')
     bytes = b''
     print('connection accepted')
     try:
         while True:
-            # Run a viewer with an appropriate command line. Uncomment the mplayer
-                # version if you would prefer to use mplayer instead of VLC
-                    #cmdline = ['vlc', '--demux', 'h264', '-']
-                        #cmdline = ['mplayer', '-fps', '25', '-cache', '1024', '-']
-                    
-                    #player = subprocess.Popen(cmdline, stdin=subprocess.PIPE)
-                                            # Repeatedly read 1k of data from the connection and write it to
-                                                    # the media player's stdin
             bytes += connection.read(1024)
             a = bytes.find(b'\xff\xd8')
             b = bytes.find(b'\xff\xd9')
@@ -41,13 +29,14 @@ while True:
                 jpg = bytes[a:b+2]
                 bytes = bytes[b+2:]
                 i = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
+                (flag, encodedImage) = cv2.imencode(".jpg", i)
+                print('flag {}'.format(flag))
+                print('encodedImage {}'.format(encodedImage))
                 print(type(i))
                 # print('i {}, type {}'.format(i, type(i)))
                 # cv2.imshow('i', i)
             if not bytes:
                 raise Exception('No bytes')
-            # print('Data recieved, data_format=={}, data=={}'.format(type(bytes), bytes))
-                        #player.stdin.write(data)
     except Exception as e:
         print('Exception')
         exc_type, exc_value, exc_traceback = sys.exc_info()
