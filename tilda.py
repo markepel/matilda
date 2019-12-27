@@ -44,7 +44,7 @@ while True:
                     exit(0) 
             if not bytes:
                 raise Exception('No bytes')
-            print('Data recieved, data_format=={}, data=={}'.format(type(data), data))
+            print('Data recieved, data_format=={}, data=={}'.format(type(bytes), bytes))
                         #player.stdin.write(data)
     except Exception as e:
         print('Exception')
