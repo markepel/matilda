@@ -35,7 +35,7 @@ try:
         print('Ignition')
         with picamera.array.PiRGBArray(camera) as stream:
             image = 1
-            while(image)
+            while image:
                 camera.capture(stream, format='bgr')
                 image = stream.array
                 print('image ={} len = {}'.format(image, len(image)))
