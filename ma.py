@@ -3,6 +3,7 @@ import picamera.array
 import socket
 from config import tilda_ip
 import time
+import io
 # import cv2
 #import imutils
 
