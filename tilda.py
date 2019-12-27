@@ -41,10 +41,9 @@ while True:
                 jpg = bytes[a:b+2]
                 bytes = bytes[b+2:]
                 i = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
-                print('i {}, type {}'.format(i, type(i)))
+                print(i)
+                # print('i {}, type {}'.format(i, type(i)))
                 # cv2.imshow('i', i)
-                if cv2.waitKey(1) == 27:
-                    exit(0) 
             if not bytes:
                 raise Exception('No bytes')
             # print('Data recieved, data_format=={}, data=={}'.format(type(bytes), bytes))
