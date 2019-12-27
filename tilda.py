@@ -4,6 +4,7 @@ from imutils.video import VideoStream
 from flask import Response
 from flask import Flask
 from flask import render_template
+import sys, traceback
 # Start a socket listening for connections on 0.0.0.0:8000 (0.0.0.0 means
 # all interfaces)
 app = Flask(__name__)
@@ -42,11 +43,12 @@ while True:
                 if cv2.waitKey(1) == 27:
                     exit(0) 
             if not data:
-                raise Exception()
+                raise Exception('No data')
             print('Data recieved, data_format=={}, data=={}'.format(type(data), data))
                         #player.stdin.write(data)
-    except:
+    except Exception as e:
         print('Exception')
+        traceback.print_exc(file=sys.stdout)
         connection.close()
         try:
             pass
