@@ -29,7 +29,7 @@ try:
     with picamera.PiCamera() as camera:
         camera.resolution = (640, 480)
         camera.framerate = 24
-        stream = io.BytesIO()
+        # stream = io.BytesIO()
         # rawCapture = picamera.PiRGBArray(camera, size=(640, 480))
 
         # camera.start_preview()
@@ -37,14 +37,19 @@ try:
             print(f'{i}...')
             time.sleep(i)
         print('Ignition')
+
+        camera.start_recording(connection, format='mjpeg')
+        camera.wait_recording(6000)
+        camera.stop_recording()
+
         # for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-        for foo in camera.capture_continuous(stream, format='jpeg'):
+        # for foo in camera.capture_continuous(stream, format='jpeg'):
 
             # encoded, buffer = cv2.imencode('.jpg', frame)
-            print('foo = {}, type = {}'.format(foo, type(foo)))
+            # print('foo = {}, type = {}'.format(foo, type(foo)))
             # clear the stream in preparation for the next frame
-            stream.truncate(0)
-            stream.seek(0)
+            # stream.truncate(0)
+            # stream.seek(0)
 
         # with picamera.array.PiRGBArray(camera) as stream:
             # image = 1
