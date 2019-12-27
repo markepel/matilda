@@ -8,8 +8,7 @@ import cv2
 import numpy as np
 
 
-
-
+app = Flask(__name__)
 
 @app.route("/video_feed")
 def video_feed():
@@ -25,7 +24,6 @@ def video_feed():
 # server_socket.listen(0)
 # connection = server_socket.accept()[0].makefile('rb')
 # print('connection accepted')
-app = Flask(__name__)
 app.run(host='0.0.0.0', port=5000, debug=True,
         threaded=True, use_reloader=False)
 
