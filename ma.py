@@ -27,7 +27,7 @@ try:
     with picamera.PiCamera() as camera:
         camera.resolution = (640, 480)
         camera.framerate = 24
-        rawCapture = picamera.PiRGBArray(camera, size=(640, 480))
+        # rawCapture = picamera.PiRGBArray(camera, size=(640, 480))
 
         # camera.start_preview()
         for i in range(1,6):
