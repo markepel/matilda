@@ -31,7 +31,8 @@ def image_generator(stream):
                 # print('i {}, type {}'.format(i, type(i)))
                 # cv2.imshow('i', i)
             if not bytes:
-                raise Exception('No bytes')
+                # raise Exception('No bytes')
+                continue
         stream.close()
         print('stream closed')
     except Exception as e:
