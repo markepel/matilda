@@ -33,7 +33,7 @@ try:
         # rawCapture = picamera.PiRGBArray(camera, size=(640, 480))
 
         # camera.start_preview()
-        for i in range(1,6):
+        for i in range(1,3):
             print(f'{i}...')
             time.sleep(i)
         print('Ignition')
