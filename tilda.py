@@ -15,24 +15,6 @@ server_socket = socket.socket()
 server_socket.bind(('0.0.0.0', 8000))
 server_socket.listen(0)
 
-while True:
-    print('Listening...')
-    
-    bytes = b''
-    print('connection accepted')
-    connection = server_socket.accept()[0].makefile('rb')
-    print('connection accepted')
-
-    gen = image_generator(connection)
-    for x in gen:
-        print(x)
-        
-    # finally:
-    #     connection.close()
-    #     server_socket.close()
-
-        #player.terminate()
-
 def image_generator(connection):
     bytes = b''
     try:
@@ -74,6 +56,24 @@ def image_generator(connection):
         #connection = server_socket.accept()[0].makefile('rb')
         print('new connection')
     
+
+while True:
+    print('Listening...')
+    
+    connection = server_socket.accept()[0].makefile('rb')
+    print('connection accepted')
+
+    gen = image_generator(connection)
+    for x in gen:
+        print(x)
+        
+    # finally:
+    #     connection.close()
+    #     server_socket.close()
+
+        #player.terminate()
+
+
 
 @app.route("/video_feed")
 def video_feed():
