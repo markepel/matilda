@@ -9,6 +9,17 @@ import numpy as np
 
 
 
+
+
+@app.route("/video_feed")
+def video_feed():
+    return 'Hello, World!'
+    # gen = image_generator()
+    # for x in gen:
+    #     print(x)
+    # return Response(image_generator(),
+    #     mimetype = "multipart/x-mixed-replace; boundary=frame")
+
 # server_socket = socket.socket()
 # server_socket.bind(('0.0.0.0', 8000))
 # server_socket.listen(0)
@@ -76,13 +87,3 @@ print('Listening...')
 
         #player.terminate()
 
-
-
-@app.route("/video_feed")
-def video_feed():
-    return 'Hello, World!'
-    # gen = image_generator()
-    # for x in gen:
-    #     print(x)
-    # return Response(image_generator(),
-    #     mimetype = "multipart/x-mixed-replace; boundary=frame")
