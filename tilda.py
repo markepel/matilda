@@ -32,7 +32,7 @@ while True:
                 i = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
                 cv2.imwrite('image{}.jpg'.format(counter), i)
                 counter += 1
-                # (flag, encodedImage) = cv2.imencode(".jpg", i)
+                (flag, encodedImage) = cv2.imencode(".jpg", jpg)
                 # print('flag {}'.format(flag))
                 # print('encodedImage {}'.format(encodedImage))
                 # print(type(i))
