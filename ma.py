@@ -1,6 +1,6 @@
 import picamera
 import socket
-from matilda.config import tilda_ip
+from config import tilda_ip
 import time
 import cv2
 #import imutils
