@@ -59,13 +59,13 @@ def image_generator(connection):
 
 while True:
     print('Listening...')
-    
-    connection = server_socket.accept()[0].makefile('rb')
-    print('connection accepted')
 
-    gen = image_generator(connection)
-    for x in gen:
-        print(x)
+    # connection = server_socket.accept()[0].makefile('rb')
+    # print('connection accepted')
+
+    # gen = image_generator(connection)
+    # for x in gen:
+    #     print(x)
         
     # finally:
     #     connection.close()
@@ -77,5 +77,11 @@ while True:
 
 @app.route("/video_feed")
 def video_feed():
+    connection = server_socket.accept()[0].makefile('rb')
+    print('connection accepted')
+
+    gen = image_generator(connection)
+    for x in gen:
+        print(x)
     return Response(image_generator(),
         mimetype = "multipart/x-mixed-replace; boundary=frame")
