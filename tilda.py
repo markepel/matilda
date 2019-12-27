@@ -21,7 +21,7 @@ while True:
     bytes = b''
     print('connection accepted')
     try:
-        counter = 0
+        #counter = 0
         while True:
             bytes += connection.read(1024)
             a = bytes.find(b'\xff\xd8')
@@ -30,9 +30,9 @@ while True:
                 jpg = bytes[a:b+2]
                 bytes = bytes[b+2:]
                 i = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
-                cv2.imwrite('image{}.jpg'.format(counter), i)
-                counter += 1
-                (flag, encodedImage) = cv2.imencode(".jpg", jpg)
+                #cv2.imwrite('image{}.jpg'.format(counter), i)
+                #counter += 1
+                (flag, encodedImage) = cv2.imencode(".jpg", i)
                 # print('flag {}'.format(flag))
                 # print('encodedImage {}'.format(encodedImage))
                 # print(type(i))
