@@ -60,10 +60,7 @@ print('connection accepted')
 @app.route("/video_feed")
 def video_feed():
     # return 'Hello, World!'
-    gen = image_generator(connection)
-    for x in gen:
-        print(x)
-    return Response(image_generator(),
+    return Response(image_generator(connection),
         mimetype = "multipart/x-mixed-replace; boundary=frame")
 
 
