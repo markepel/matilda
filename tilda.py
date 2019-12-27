@@ -51,22 +51,22 @@ def image_generator(stream):
         #connection = server_socket.accept()[0].makefile('rb')
         print('new connection')
     
-
-
-@app.route("/video_feed")
-def video_feed():
-    # return 'Hello, World!'
-    gen = image_generator()
-    for x in gen:
-        print(x)
-    return Response(image_generator(),
-        mimetype = "multipart/x-mixed-replace; boundary=frame")
-
 server_socket = socket.socket()
 server_socket.bind(('0.0.0.0', 8000))
 server_socket.listen(0)
 connection = server_socket.accept()[0].makefile('rb')
 print('connection accepted')
+
+@app.route("/video_feed")
+def video_feed():
+    # return 'Hello, World!'
+    gen = image_generator(connection)
+    for x in gen:
+        print(x)
+    return Response(image_generator(),
+        mimetype = "multipart/x-mixed-replace; boundary=frame")
+
+
 
 app.run(host='0.0.0.0', port=5000, debug=True,
         threaded=True, use_reloader=False)
