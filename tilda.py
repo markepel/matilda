@@ -8,7 +8,7 @@ import cv2
 import numpy as np
 
 app = Flask(__name__)
-app.run(host='0.0.0.0', port=80, debug=True,
+app.run(host='0.0.0.0', port=5000, debug=True,
         threaded=True, use_reloader=False)
 
 server_socket = socket.socket()
