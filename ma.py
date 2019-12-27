@@ -1,4 +1,5 @@
 import picamera
+import picamera.array
 import socket
 from config import tilda_ip
 import time
@@ -36,7 +37,7 @@ try:
         print('Ignition')
         with picamera.array.PiRGBArray(camera) as stream:
             image = 1
-            while image:
+            while image is not None:
                 camera.capture(stream, format='bgr')
                 image = stream.array
                 print('image ={} len = {}'.format(image, len(image)))
