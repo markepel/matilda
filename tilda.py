@@ -23,7 +23,9 @@ while True:
     connection = server_socket.accept()[0].makefile('rb')
     print('connection accepted')
 
-    image_generator(connection)
+    gen = image_generator(connection)
+    for x in gen:
+        print(x)
         
     # finally:
     #     connection.close()
