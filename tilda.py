@@ -1,6 +1,5 @@
 import socket
 import subprocess
-from imutils.video import VideoStream
 from flask import Response
 from flask import Flask
 from flask import render_template
