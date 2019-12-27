@@ -28,6 +28,7 @@ try:
     with picamera.PiCamera() as camera:
         camera.resolution = (640, 480)
         camera.framerate = 24
+        stream = io.BytesIO()
         # rawCapture = picamera.PiRGBArray(camera, size=(640, 480))
 
         # camera.start_preview()
@@ -35,17 +36,21 @@ try:
             print(f'{i}...')
             time.sleep(i)
         print('Ignition')
-        with picamera.array.PiRGBArray(camera) as stream:
-            image = 1
-            while image is not None:
-                camera.capture(stream, format='bgr')
-                image = stream.array
-                print('image ={} len = {}'.format(image, len(image)))
         # for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-        #     encoded, buffer = cv2.imencode('.jpg', frame)
-        #     print('encofed = {}, buffer = {}'.format(encoded, buffer))
-        #     # clear the stream in preparation for the next frame
-        #     rawCapture.truncate(0)
+        for foo in camera.capture_continuous(stream, format='jpeg'):
+
+            # encoded, buffer = cv2.imencode('.jpg', frame)
+            print('foo = {}, len = {}'.format(encoded, buffer))
+            # clear the stream in preparation for the next frame
+            stream.truncate(0)
+            stream.seek(0)
+
+        # with picamera.array.PiRGBArray(camera) as stream:
+            # image = 1
+            # while image is not None:
+            #     camera.capture(stream, format='bgr')
+            #     image = stream.array
+            #     print('image ={} len = {}'.format(image, len(image)))
 finally:
     connection.close()
     client_socket.close()
