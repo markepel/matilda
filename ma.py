@@ -41,7 +41,7 @@ try:
         for foo in camera.capture_continuous(stream, format='jpeg'):
 
             # encoded, buffer = cv2.imencode('.jpg', frame)
-            print('foo = {}, len = {}'.format(encoded, buffer))
+            print('foo = {}, len = {}, type = {}'.format(foo, len(foo), type(foo)))
             # clear the stream in preparation for the next frame
             stream.truncate(0)
             stream.seek(0)
