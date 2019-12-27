@@ -17,8 +17,8 @@ print('connection accepted')
 app = Flask(__name__)
 app.run(host='0.0.0.0', port=5000, debug=True,
         threaded=True, use_reloader=False)
-        
-def image_generator(connection):
+
+def image_generator():
     bytes = b''
     try:
         while True:
@@ -80,7 +80,8 @@ print('Listening...')
 
 @app.route("/video_feed")
 def video_feed():
-    gen = image_generator(connection)
+    return 'Hello, World!'
+    gen = image_generator()
     for x in gen:
         print(x)
     return Response(image_generator(),
