@@ -2,6 +2,7 @@ import picamera
 import socket
 from config import tilda_ip
 import time
+import cv2
 #import imutils
 
 client_socket = socket.socket()
@@ -25,14 +26,18 @@ try:
     with picamera.PiCamera() as camera:
         camera.resolution = (640, 480)
         camera.framerate = 24
-        camera.start_preview()
+        rawCapture = picamera.PiRGBArray(camera, size=(640, 480))
+
+        # camera.start_preview()
         for i in range(1,6):
             print(f'{i}...')
             time.sleep(i)
         print('Ignition')
-        camera.start_recording(connection, format='h264')
-        camera.wait_recording(6000)
-        camera.stop_recording()
+        for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+            encoded, buffer = cv2.imencode('.jpg', frame)
+            print('encofed = {}, buffer = {}'.format(encoded, buffer))
+            # clear the stream in preparation for the next frame
+            rawCapture.truncate(0)
 finally:
     connection.close()
     client_socket.close()
