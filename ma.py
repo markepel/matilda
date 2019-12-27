@@ -33,11 +33,17 @@ try:
             print(f'{i}...')
             time.sleep(i)
         print('Ignition')
-        for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-            encoded, buffer = cv2.imencode('.jpg', frame)
-            print('encofed = {}, buffer = {}'.format(encoded, buffer))
-            # clear the stream in preparation for the next frame
-            rawCapture.truncate(0)
+        with picamera.array.PiRGBArray(camera) as stream:
+            image = 1
+            while(image)
+                camera.capture(stream, format='bgr')
+                image = stream.array
+                print('image ={} len = {}'.format(image, len(image)))
+        # for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+        #     encoded, buffer = cv2.imencode('.jpg', frame)
+        #     print('encofed = {}, buffer = {}'.format(encoded, buffer))
+        #     # clear the stream in preparation for the next frame
+        #     rawCapture.truncate(0)
 finally:
     connection.close()
     client_socket.close()
