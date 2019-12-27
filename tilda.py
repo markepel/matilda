@@ -33,8 +33,8 @@ while True:
                                             # Repeatedly read 1k of data from the connection and write it to
                                                     # the media player's stdin
             bytes += connection.read(1024)
-            a = bytes.find('\xff\xd8')
-            b = bytes.find('\xff\xd9')
+            a = bytes.find(b'\xff\xd8')
+            b = bytes.find(b'\xff\xd9')
             if a != -1 and b != -1:
                 jpg = bytes[a:b+2]
                 bytes = bytes[b+2:]
