@@ -17,11 +17,23 @@ server_socket.listen(0)
 
 while True:
     print('Listening...')
-    connection = server_socket.accept()[0].makefile('rb')
+    
     bytes = b''
     print('connection accepted')
+    connection = server_socket.accept()[0].makefile('rb')
+    print('connection accepted')
+
+    image_generator(connection)
+        
+    # finally:
+    #     connection.close()
+    #     server_socket.close()
+
+        #player.terminate()
+
+def image_generator(connection):
+    bytes = b''
     try:
-        #counter = 0
         while True:
             bytes += connection.read(1024)
             a = bytes.find(b'\xff\xd8')
@@ -33,6 +45,7 @@ while True:
                 #cv2.imwrite('image{}.jpg'.format(counter), i)
                 #counter += 1
                 (flag, encodedImage) = cv2.imencode(".jpg", i)
+                yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encodedImage) + b'\r\n')
                 # print('flag {}'.format(flag))
                 # print('encodedImage {}'.format(encodedImage))
                 # print(type(i))
@@ -40,35 +53,27 @@ while True:
                 # cv2.imshow('i', i)
             if not bytes:
                 raise Exception('No bytes')
+        connection.close()
+        print('connection closed')
     except Exception as e:
         print('Exception')
         exc_type, exc_value, exc_traceback = sys.exc_info()
         traceback.print_tb(exc_traceback, limit=1, file=sys.stdout)
         traceback.print_exc(limit=2, file=sys.stdout)
 
-        connection.close()
         try:
-            pass
+            connection.close()
             #server_socket.close()
         except:
-            print('Error in except server socket.close')
+            print('Error in except server connection.close()')
         print('connection closed, listening')
         #server_socket.listen(0)
         print('after listen')
         #connection = server_socket.accept()[0].makefile('rb')
         print('new connection')
-        
-    # finally:
-    #     connection.close()
-    #     server_socket.close()
+    
 
-        #player.terminate()
-
-#def gen(camera):
- #       frame = camera.read()
-  #      yield (b'--frame\r\n
-   #     'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-
-#@app.route('/video_feed')
-#def video_feed():
- #   return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.route("/video_feed")
+def video_feed():
+    return Response(image_generator(),
+        mimetype = "multipart/x-mixed-replace; boundary=frame")
