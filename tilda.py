@@ -20,7 +20,7 @@ while True:
     #connection = server_socket.accept()[0].makefile('rb')
 
     connection = server_socket.accept()[0].makefile('rb')
-    bytes = ''
+    bytes = b''
     print('connection accepted')
     try:
         while True:
@@ -48,7 +48,10 @@ while True:
                         #player.stdin.write(data)
     except Exception as e:
         print('Exception')
-        traceback.print_exc(file=sys.stdout)
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        traceback.print_tb(exc_traceback, limit=1, file=sys.stdout)
+        traceback.print_exc(limit=2, file=sys.stdout)
+
         connection.close()
         try:
             pass
