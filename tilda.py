@@ -42,8 +42,8 @@ while True:
                 cv2.imshow('i', i)
                 if cv2.waitKey(1) == 27:
                     exit(0) 
-            if not data:
-                raise Exception('No data')
+            if not bytes:
+                raise Exception('No bytes')
             print('Data recieved, data_format=={}, data=={}'.format(type(data), data))
                         #player.stdin.write(data)
     except Exception as e:
