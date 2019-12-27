@@ -5,6 +5,7 @@ from flask import Response
 from flask import Flask
 from flask import render_template
 import sys, traceback
+import cv2
 # Start a socket listening for connections on 0.0.0.0:8000 (0.0.0.0 means
 # all interfaces)
 app = Flask(__name__)
