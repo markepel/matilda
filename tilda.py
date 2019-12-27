@@ -9,11 +9,11 @@ import numpy as np
 
 
 
-server_socket = socket.socket()
-server_socket.bind(('0.0.0.0', 8000))
-server_socket.listen(0)
-connection = server_socket.accept()[0].makefile('rb')
-print('connection accepted')
+# server_socket = socket.socket()
+# server_socket.bind(('0.0.0.0', 8000))
+# server_socket.listen(0)
+# connection = server_socket.accept()[0].makefile('rb')
+# print('connection accepted')
 app = Flask(__name__)
 app.run(host='0.0.0.0', port=5000, debug=True,
         threaded=True, use_reloader=False)
@@ -81,8 +81,8 @@ print('Listening...')
 @app.route("/video_feed")
 def video_feed():
     return 'Hello, World!'
-    gen = image_generator()
-    for x in gen:
-        print(x)
-    return Response(image_generator(),
-        mimetype = "multipart/x-mixed-replace; boundary=frame")
+    # gen = image_generator()
+    # for x in gen:
+    #     print(x)
+    # return Response(image_generator(),
+    #     mimetype = "multipart/x-mixed-replace; boundary=frame")
