@@ -2,7 +2,7 @@ import picamera
 import socket
 from config import tilda_ip
 import time
-import cv2
+# import cv2
 #import imutils
 
 client_socket = socket.socket()
