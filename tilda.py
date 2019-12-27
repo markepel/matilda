@@ -57,8 +57,8 @@ def image_generator(connection):
         print('new connection')
     
 
-while True:
-    print('Listening...')
+#while True:
+print('Listening...')
 
     # connection = server_socket.accept()[0].makefile('rb')
     # print('connection accepted')
