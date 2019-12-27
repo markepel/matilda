@@ -41,7 +41,7 @@ while True:
                 jpg = bytes[a:b+2]
                 bytes = bytes[b+2:]
                 i = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
-                print(i)
+                print(type(i))
                 # print('i {}, type {}'.format(i, type(i)))
                 # cv2.imshow('i', i)
             if not bytes:
