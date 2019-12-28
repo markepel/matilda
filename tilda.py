@@ -20,11 +20,12 @@ def image_generator(stream):
             if a != -1 and b != -1:
                 jpg = bytes[a:b+2]
                 bytes = bytes[b+2:]
-                i = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
+                # i = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
                 #cv2.imwrite('image{}.jpg'.format(counter), i)
                 #counter += 1
-                (flag, encodedImage) = cv2.imencode(".jpg", i)
-                yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encodedImage) + b'\r\n')
+                # (flag, encodedImage) = cv2.imencode(".jpg", i)
+                # yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encodedImage) + b'\r\n')
+                yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytes + b'\r\n')
                 # print('flag {}'.format(flag))
                 # print('encodedImage {}'.format(encodedImage))
                 # print(type(i))
@@ -32,7 +33,7 @@ def image_generator(stream):
                 # cv2.imshow('i', i)
             if not bytes:
                 # raise Exception('No bytes')
-                continue
+                continue    
         stream.close()
         print('stream closed')
     except Exception as e:
