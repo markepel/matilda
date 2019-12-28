@@ -25,7 +25,7 @@ def image_generator(stream):
                 #counter += 1
                 # (flag, encodedImage) = cv2.imencode(".jpg", i)
                 # yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encodedImage) + b'\r\n')
-                yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytes + b'\r\n')
+                yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(bytes) + b'\r\n')
                 # print('flag {}'.format(flag))
                 # print('encodedImage {}'.format(encodedImage))
                 # print(type(i))
