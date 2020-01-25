@@ -1,5 +1,5 @@
 import picamera
-import picamera.array
+# import picamera.array
 import socket
 from config import tilda_ip
 import time
