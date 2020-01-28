@@ -6,12 +6,14 @@ from flask import render_template
 import sys, traceback
 import cv2
 import numpy as np
+import time
 
 
 app = Flask(__name__)
 
 def image_generator(stream):
     bytes = b''
+    counter = 0
     try:
         while True:
             bytes += stream.read(1024)
@@ -20,12 +22,13 @@ def image_generator(stream):
             if a != -1 and b != -1:
                 jpg = bytes[a:b+2]
                 bytes = bytes[b+2:]
-                # i = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
+                #i = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
                 #cv2.imwrite('image{}.jpg'.format(counter), i)
                 #counter += 1
-                # (flag, encodedImage) = cv2.imencode(".jpg", i)
-                # yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encodedImage) + b'\r\n')
-                yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(bytes) + b'\r\n')
+                #(flag, encodedImage) = cv2.imencode(".jpg", i)
+                yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(jpg) + b'\r\n')
+                #time.sleep(0.1)
+                #yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(jpg) + b'\r\n')
                 # print('flag {}'.format(flag))
                 # print('encodedImage {}'.format(encodedImage))
                 # print(type(i))
