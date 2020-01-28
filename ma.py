@@ -14,7 +14,7 @@ client_socket.connect((tilda_ip, 8000))
 
 print('connected')
 
-connection = client_socket.makefile('wb')
+connection = client_socket.makefile('w')
 
 try:
     #vs = imutils.VideoStream(src=0, usePicamera=True, resolution=(720, 576)).start()
