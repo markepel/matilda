@@ -10,7 +10,7 @@ import io
 client_socket = socket.socket()
 print('connecting...')
 print(tilda_ip)
-client_socket.connect((tilda_ip, 8000))
+client_socket.connect((tilda_ip, 8008))
 
 print('connected')
 
@@ -28,7 +28,7 @@ try:
         #client_socket.sendall(frame)
     with picamera.PiCamera() as camera:
         camera.resolution = (640, 480)
-        camera.framerate = 6
+        camera.framerate = 
         # stream = io.BytesIO()
         # rawCapture = picamera.PiRGBArray(camera, size=(640, 480))
 
