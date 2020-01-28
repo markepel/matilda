@@ -39,7 +39,7 @@ try:
         print('Ignition')
 
         camera.start_recording(connection, format='mjpeg')
-        camera.wait_recording(100)
+        camera.wait_recording(6000)
         camera.stop_recording()
 
         # for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
