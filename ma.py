@@ -28,7 +28,7 @@ try:
         #client_socket.sendall(frame)
     with picamera.PiCamera() as camera:
         camera.resolution = (640, 480)
-        camera.framerate = 
+        camera.framerate = 6
         # stream = io.BytesIO()
         # rawCapture = picamera.PiRGBArray(camera, size=(640, 480))
 
