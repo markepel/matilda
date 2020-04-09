@@ -10,7 +10,7 @@ import io
 client_socket = socket.socket()
 print('connecting...')
 print(tilda_ip)
-client_socket.connect((tilda_ip, 8000))
+client_socket.connect((tilda_ip, 8008))
 
 print('connected')
 
