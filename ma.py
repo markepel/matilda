@@ -28,7 +28,7 @@ try:
         #client_socket.sendall(frame)
     with picamera.PiCamera() as camera:
         camera.resolution = (640, 480)
-        camera.framerate = 6
+        camera.framerate = 4
         # stream = io.BytesIO()
         # rawCapture = picamera.PiRGBArray(camera, size=(640, 480))
 
@@ -39,7 +39,7 @@ try:
         print('Ignition')
 
         camera.start_recording(connection, format='mjpeg')
-        camera.wait_recording(6000)
+        camera.wait_recording(1000)
         camera.stop_recording()
 
         # for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
@@ -57,6 +57,8 @@ try:
             #     camera.capture(stream, format='bgr')
             #     image = stream.array
             #     print('image ={} len = {}'.format(image, len(image)))
+except Exception as e`:
+    print(f'Exception {e}')
 finally:
     connection.close()
     client_socket.close()

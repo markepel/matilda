@@ -16,6 +16,7 @@ def image_generator(stream):
     counter = 0
     try:
         while True:
+            print('Enter image generator')
             bytes += stream.read(1024)
             a = bytes.find(b'\xff\xd8')
             b = bytes.find(b'\xff\xd9')
@@ -26,7 +27,7 @@ def image_generator(stream):
                 #cv2.imwrite('image{}.jpg'.format(counter), i)
                 #counter += 1
                 #(flag, encodedImage) = cv2.imencode(".jpg", i)
-                print('Yield message')
+                print('Yield image')
                 yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(jpg) + b'\r\n')
                 #time.sleep(0.1)
                 #yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(jpg) + b'\r\n')
