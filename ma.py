@@ -57,7 +57,7 @@ try:
             #     camera.capture(stream, format='bgr')
             #     image = stream.array
             #     print('image ={} len = {}'.format(image, len(image)))
-except Exception as e`:
+except Exception as e:
     print(f'Exception {e}')
 finally:
     connection.close()
