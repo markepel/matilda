@@ -57,7 +57,7 @@ def image_generator(stream):
         print('new connection')
     
 server_socket = socket.socket()
-server_socket.bind(('0.0.0.0', 8000))
+server_socket.bind(('0.0.0.0', 8008))
 server_socket.listen(0)
 connection = server_socket.accept()[0].makefile('rb')
 print('connection accepted')
@@ -65,6 +65,7 @@ print('connection accepted')
 @app.route("/video_feed")
 def video_feed():
     # return 'Hello, World!'
+    print('Starting video feeding')
     return Response(image_generator(connection),
         mimetype = "multipart/x-mixed-replace; boundary=frame")
 
