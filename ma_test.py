@@ -18,13 +18,13 @@ try:
     #while True:
      #   frame = vs.read()
         #client_socket.sendall(frame)
-counter = 0
-with picamera.PiCamera() as camera:
-    camera.start_preview()
-    time.sleep(2)
-    for filename in camera.capture_continuous(f'img{counter}.jpg'):
-        print(f'Captured {filename}')
-        time.sleep(0.4) # wait 5 minutes
+    counter = 0
+    with picamera.PiCamera() as camera:
+        camera.start_preview()
+        time.sleep(2)
+        for filename in camera.capture_continuous(f'img{counter}.jpg'):
+            print(f'Captured {filename}')
+            time.sleep(0.4) # wait 5 minutes
 
     # with picamera.PiCamera() as camera:
     #     camera.resolution = (640, 480)
