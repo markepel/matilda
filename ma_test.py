@@ -9,7 +9,7 @@ with picamera.PiCamera() as camera:
     print('c')
     time.sleep(2)
     print('d')
-    for filename in camera.capture_continuous(f'img{counter}.jpg'):
+    for filename in camera.capture_continuous('img{counter:03d}.jpg'):
         print(f'Captured {filename}')
         counter+=1
         time.sleep(4)
