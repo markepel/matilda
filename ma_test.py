@@ -13,4 +13,4 @@ print('Starting')
         print('d')
         for filename in camera.capture_continuous(f'img{counter}.jpg'):
             print(f'Captured {filename}')
-            time.sleep(0.4)
+            time.sleep(4)
