@@ -45,4 +45,10 @@ def video_feed():
         mimetype = "multipart/x-mixed-replace; boundary=frame")
 
 
+app.run(host='0.0.0.0', port=5000, debug=True,
+        threaded=True, use_reloader=False)
+
+print('Listening...')
+
+
 
