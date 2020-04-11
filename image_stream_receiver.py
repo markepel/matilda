@@ -24,7 +24,7 @@ def image_generator():
           image_stream.write(connection.read(image_len))
           image_stream.seek(0)
           yield (b'--frame\r\n'
-                 b'Content-Type: image/jpeg\r\n\r\n' + image_stream + b'\r\n')
+                 b'Content-Type: image/jpeg\r\n\r\n' + image_stream.read() + b'\r\n')
           print('after yield image')
           # image = Image.open(image_stream)
           # print('Image is %dx%d' % image.size)
