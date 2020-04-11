@@ -57,7 +57,7 @@ try:
 
     def streams():
         global count, finish
-        while finish - start < 30:
+        while finish - start < 300:
             with pool_lock:
                 if pool:
                     streamer = pool.pop()
