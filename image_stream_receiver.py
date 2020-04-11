@@ -30,7 +30,10 @@ def image_generator():
           # print('Image is %dx%d' % image.size)
           # image.verify()
           # print('Image is verified')
+  except Exception as e:
+      print('Exception {}'.format(e))
   finally:
+      print('finally')
       connection.close()
       server_socket.close()
 
