@@ -51,7 +51,7 @@ try:
         print('Excepion in video_feed {}'.format(e))
 
   @app.route("/videobytes_feed")
-  def video_feed():
+  def videobytes_feed():
       try:
         print('Starting videobytes_feed feeding')
         for image in image_generator():
