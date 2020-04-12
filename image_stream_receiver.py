@@ -17,6 +17,7 @@ try:
 
   def image_generator():
     try:
+        print('image_generator starts')
         while True:
             image_len = struct.unpack('<L', connection.read(struct.calcsize('<L')))[0]
             if not image_len:
@@ -26,15 +27,14 @@ try:
             image_stream.seek(0)
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + image_stream.read() + b'\r\n')
-            print('after yield image')
             # image = Image.open(image_stream)
             # print('Image is %dx%d' % image.size)
             # image.verify()
             # print('Image is verified')
     except Exception as e:
-        print('Exception {}'.format(e))
+        print('image_generator Exception {}'.format(e))
     finally:
-        print('finally')
+        print('image_generator finally')
         connection.close()
         server_socket.close()
 
@@ -43,13 +43,21 @@ try:
   app = Flask(__name__)
   @app.route("/video_feed")
   def video_feed():
-      # return 'Hello, World!'
       try:
         print('Starting video feeding')
         return Response(image_generator(),
             mimetype = "multipart/x-mixed-replace; boundary=frame")
       except Exception as e:
         print('Excepion in video_feed {}'.format(e))
+
+  @app.route("/videobytes_feed")
+  def video_feed():
+      try:
+        print('Starting videobytes_feed feeding')
+        for image in image_generator():
+          time.sleep(0.1)
+      except Exception as e:
+        print('Excepion in videobytes_feed {}'.format(e))
 
   app.run(host='0.0.0.0', port=5000, debug=True,
           threaded=True, use_reloader=False)
