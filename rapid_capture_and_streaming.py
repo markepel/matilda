@@ -54,7 +54,7 @@ try:
 
     def streamer_setter_generator(streamer):
         global count, finish
-        while finish - start < 300:
+        while finish - start < 600:
             yield streamer.stream
             streamer.event.set()
             print('streamer setter has set settings')
