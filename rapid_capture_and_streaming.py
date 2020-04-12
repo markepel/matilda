@@ -4,6 +4,7 @@ import time
 import threading
 import picamera
 from config import tilda_ip
+import io
 
 
 client_socket = socket.socket()
