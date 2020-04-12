@@ -5,6 +5,8 @@ from PIL import Image
 from flask import Response
 from flask import Flask
 from flask import render_template
+import time
+
 
 try:
   server_socket = socket.socket()
