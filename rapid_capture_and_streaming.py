@@ -1,9 +1,9 @@
-import io
 import socket
 import struct
 import time
 import threading
 import picamera
+from config import tilda_ip
 
 
 client_socket = socket.socket()
@@ -73,6 +73,3 @@ try:
 finally:
     connection.close()
     client_socket.close()
-
-print('Sent %d images in %d seconds at %.2ffps' % (
-    count, finish-start, count / (finish-start)))
