@@ -40,6 +40,7 @@ try:
                         connection.flush()
                         self.stream.seek(0)
                         connection.write(self.stream.read())
+                        print('Single write starts')
                     finally:
                         print('finally image')
                         self.stream.seek(0)
@@ -55,7 +56,7 @@ try:
         # pool = [ImageStreamer() for i in range(4)]
         image_streamer = ImageStreamer()
         camera.resolution = (640, 480)
-        camera.framerate = 30
+        camera.framerate = 3
         time.sleep(2)
         start = time.time()
         camera.capture_sequence(streamer_setter_generator(image_streamer), 'jpeg', use_video_port=True)
