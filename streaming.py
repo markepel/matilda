@@ -77,7 +77,7 @@ try:
     with picamera.PiCamera() as camera:
         pool = [ImageStreamer()]
         camera.resolution = (640, 480)
-        camera.framerate = 30
+        camera.framerate = 3
         time.sleep(2)
         start = time.time()
         camera.capture_sequence(streams(), 'jpeg', use_video_port=True)

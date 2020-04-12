@@ -40,16 +40,23 @@ try:
                         connection.flush()
                         self.stream.seek(0)
                         connection.write(self.stream.read())
-                        print('Single write starts')
+                        print('Single write ends')
                     finally:
                         print('finally image')
                         self.stream.seek(0)
                         self.stream.truncate()
                         self.event.clear()
+
+    start = time.time()
+    finish = time.time()
+
     def streamer_setter_generator(streamer):
-        yield streamer.stream
-        streamer.event.set()
-        print('streamer setter has set settings')
+        global finish
+        while finish - start < 300:
+            yield streamer.stream
+            streamer.event.set()
+            print('streamer setter has set settings')
+            finish = time.time()
 
 
     with picamera.PiCamera() as camera:
