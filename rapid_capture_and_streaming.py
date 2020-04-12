@@ -47,15 +47,18 @@ try:
                         self.stream.truncate()
                         self.event.clear()
 
+
+    count = 0
     start = time.time()
     finish = time.time()
 
     def streamer_setter_generator(streamer):
-        global finish
+        global count, finish
         while finish - start < 300:
             yield streamer.stream
             streamer.event.set()
             print('streamer setter has set settings')
+            count += 1
             finish = time.time()
 
 
@@ -80,5 +83,6 @@ try:
     print('connection write ends')
 
 finally:
+    print('Sent %d images in %d seconds at %.2ffps' % (count, finish-start, count / (finish-start)))
     connection.close()
     client_socket.close()
