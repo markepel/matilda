@@ -6,7 +6,7 @@ import picamera
 from config import tilda_ip, tilda_port, camera_resolution, camera_framerate
 import io
 import logging
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
 
 try:
     client_socket = socket.socket()
