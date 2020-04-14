@@ -15,6 +15,7 @@ class IncomeManager():
         self.subscribers = set()
     
     def start_receiving(self):
+        logger.info('start_receiving')
         self.start_listening()
         time.sleep(2)
         handle_income()
