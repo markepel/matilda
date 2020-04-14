@@ -18,6 +18,7 @@ def set_logging():
     FORMAT = '%(asctime)-15s %(message)s'
     logging.basicConfig(format=FORMAT)
     print('logging initialized')
+    logging.debug('huy')
 
 def start_flask(income_manager=None):
     app = Flask(__name__)
