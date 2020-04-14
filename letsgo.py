@@ -17,7 +17,7 @@ from image_generator import ImageGenerator
 def set_logger():
     FORMAT = '%(asctime)-15s %(message)s'
     logging.basicConfig(format=FORMAT)
-    logger.info('logger initialized')
+    print('logger initialized')
 
 def start_flask(income_manager=None):
     app = Flask(__name__)
