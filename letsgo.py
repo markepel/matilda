@@ -7,10 +7,7 @@ from flask import render_template
 import time
 import config
 import logging
-
-logging.basicConfig(format='%(message)s')
-logging.warning('This will get logged to a file')
-# logging.basicConfig(level=logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 import threading
 from income_manager import IncomeManager
 from image_generator import ImageGenerator
