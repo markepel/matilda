@@ -7,7 +7,7 @@ from flask import Flask
 from flask import render_template
 import tim
 from config import tilda_ip, tilda_port
-
+from image_generator import image_generator
 
 try:
   server_socket = socket.socket()
