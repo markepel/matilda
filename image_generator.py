@@ -17,7 +17,8 @@ class ImageGenerator():
         start = time.time()
         finish = time.time()
         count = 0
-        while finish - start < config.generation_period:
+        # while finish - start < config.generation_period:
+        while True:
             self.fresh_image_event.wait()
             yield self.income_manager.get_last_image()
             logging.info('ImageGenerator yielded new image')
