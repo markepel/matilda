@@ -5,12 +5,13 @@ from PIL import Image
 from flask import Response
 from flask import Flask
 from flask import render_template
-import time
+import tim
+from config import tilda_ip, tilda_port
 
 
 try:
   server_socket = socket.socket()
-  server_socket.bind(('0.0.0.0', 8008))
+  server_socket.bind(('0.0.0.0', tilda_port))
   server_socket.listen(0)
   connection = server_socket.accept()[0].makefile('rb')
   print('connection accepted')

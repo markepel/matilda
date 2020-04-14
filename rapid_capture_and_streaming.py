@@ -3,22 +3,17 @@ import struct
 import time
 import threading
 import picamera
-from config import tilda_ip
+from config import tilda_ip, tilda_port, camera_resolution, camera_framerate
 import io
 
 
-client_socket = socket.socket()
-print(tilda_ip)
-
-
-
-client_socket = socket.socket()
-client_socket.connect((tilda_ip, 8008))
-print('connecting...')
-connection = client_socket.makefile('wb')
-print('connected')
-
 try:
+    client_socket = socket.socket()
+    client_socket.connect((tilda_ip, tilda_port))
+    print('connecting to {tilda_ip}:{tilda_port}...')
+    connection = client_socket.makefile('wb')
+    print(f'connected to {tilda_ip}:{tilda_port}')
+
     connection_lock = threading.Lock()
 
     class ImageStreamer(threading.Thread):
@@ -33,16 +28,13 @@ try:
             # This method runs in a background thread
             while not self.terminated:
                 # Wait for the image to be written to the stream
-                if self.event.wait(1):
+                if self.event.wait(3):
                     try:
-                        print('connection write starts')
                         connection.write(struct.pack('<L', self.stream.tell()))
                         connection.flush()
                         self.stream.seek(0)
                         connection.write(self.stream.read())
-                        print('Single write ends')
                     finally:
-                        print('finally image')
                         self.stream.seek(0)
                         self.stream.truncate()
                         self.event.clear()
@@ -54,6 +46,7 @@ try:
 
     def streamer_setter_generator(streamer):
         global count, finish
+        print('streaming starts')
         while finish - start < 1800:
             yield streamer.stream
             streamer.event.set()
@@ -64,9 +57,10 @@ try:
     with picamera.PiCamera() as camera:
         # pool = [ImageStreamer() for i in range(4)]
         image_streamer = ImageStreamer()
-        camera.resolution = (640, 480)
-        camera.framerate = 3
+        camera.resolution = camera_resolution
+        camera.framerate = camera_framerate
         time.sleep(2)
+        print('camera is ready')
         start = time.time()
         camera.capture_sequence(streamer_setter_generator(image_streamer), 'jpeg', use_video_port=True)
 
