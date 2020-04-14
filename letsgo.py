@@ -19,7 +19,7 @@ def set_logging():
     logging.basicConfig(format=FORMAT)
     logging.info('logging initialized')
 
-def start_flask(income_manager=None):
+def create_flask_app(income_manager=None):
     app = Flask(__name__)
 
     @app.route("/video_feed")
@@ -40,9 +40,8 @@ def start_flask(income_manager=None):
             logging.info('Excepion in videobytes_feed {}'.format(e))
     
     logging.info('flask starting')
-    app.run(host='0.0.0.0', port=5000, debug=True,
-            threaded=True, use_reloader=False)
-    logging.info('flask started')
+
+    return app
 
 
 def image_generator_to_http_adapter(image_generator):
@@ -55,7 +54,9 @@ def image_generator_to_http_adapter(image_generator):
 if __name__ == "__main__":
     set_logging()
     income_manager = IncomeManager()
-    start_flask(income_manager=income_manager)
+    flask_app = create_flask_app(income_manager=income_manager)
     logging.info('flask started main')
     image_receiver_thread = threading.Thread(target=income_manager.start_receiving)
     image_receiver_thread.start()
+    flask_app.run(host='0.0.0.0', port=5000, debug=True,threaded=True, use_reloader=False)
+    
