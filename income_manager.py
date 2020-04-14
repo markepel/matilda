@@ -11,6 +11,7 @@ import time
 
 class IncomeManager():
     def __init__(self):
+        logging.info('Income Manager initialization')
         self.image_deque =  deque(maxlen=50)
         self.subscribers = set()
     
