@@ -5,7 +5,7 @@ from PIL import Image
 from flask import Response
 from flask import Flask
 from flask import render_template
-import tim
+import time
 from config import tilda_ip, tilda_port
 from image_generator import image_generator
 
