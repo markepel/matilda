@@ -5,14 +5,15 @@ import threading
 import picamera
 from config import tilda_ip, tilda_port, camera_resolution, camera_framerate
 import io
-
+import logging
+logging.basicConfig(level=logging.INFO)
 
 try:
     client_socket = socket.socket()
     client_socket.connect((tilda_ip, tilda_port))
-    print('connecting to {tilda_ip}:{tilda_port}...')
+    logging.info('connecting to {tilda_ip}:{tilda_port}...')
     connection = client_socket.makefile('wb')
-    print(f'connected to {tilda_ip}:{tilda_port}')
+    logging.info(f'connected to {tilda_ip}:{tilda_port}')
 
     connection_lock = threading.Lock()
 
@@ -46,7 +47,7 @@ try:
 
     def streamer_setter_generator(streamer):
         global count, finish
-        print('streaming starts')
+        logging.info('streaming starts')
         while finish - start < 1800:
             yield streamer.stream
             streamer.event.set()
@@ -60,7 +61,7 @@ try:
         camera.resolution = camera_resolution
         camera.framerate = camera_framerate
         time.sleep(2)
-        print('camera is ready')
+        logging.info('camera is ready')
         start = time.time()
         camera.capture_sequence(streamer_setter_generator(image_streamer), 'jpeg', use_video_port=True)
 
@@ -71,11 +72,11 @@ try:
     # Write the terminating 0-length to the connection to let the server
     # know we're done
     with connection_lock:
-        print('connection write last')
+        logging.info('connection write last')
         connection.write(struct.pack('<L', 0))
-    print('connection write ends')
+    logging.info('connection write ends')
 
 finally:
-    print('Sent %d images in %d seconds at %.2ffps' % (count, finish-start, count / (finish-start)))
+    logging.info('Sent %d images in %d seconds at %.2ffps' % (count, finish-start, count / (finish-start)))
     connection.close()
     client_socket.close()

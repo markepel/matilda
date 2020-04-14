@@ -7,7 +7,7 @@ from flask import render_template
 import time
 import config
 import logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 import threading
 from income_manager import IncomeManager
 from image_generator import ImageGenerator
@@ -17,8 +17,7 @@ from image_generator import ImageGenerator
 def set_logging():
     FORMAT = '%(asctime)-15s %(message)s'
     logging.basicConfig(format=FORMAT)
-    print('logging initialized')
-    logging.debug('huy')
+    logging.info('logging initialized')
 
 def start_flask(income_manager=None):
     app = Flask(__name__)

@@ -3,7 +3,7 @@ import socket
 import struct
 from config import tilda_port
 import logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 import queue
 from collections import deque
 import time
