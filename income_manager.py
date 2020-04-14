@@ -19,7 +19,7 @@ class IncomeManager():
         logging.info('start_receiving')
         self.start_listening()
         time.sleep(2)
-        handle_income()
+        self.handle_income()
 
     def start_listening(self):
         server_socket = socket.socket()
