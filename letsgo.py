@@ -16,7 +16,6 @@ from image_generator import ImageGenerator
 
 def set_logging():
     # logging.basicConfig(format='%(asctime)s.%(msecs)03d %(levelname)s {%(module)s} [%(funcName)s] %(message)s', datefmt='%Y-%m-%d,%H:%M:%S')
-    logging.basicConfig(format='%(asctime)s.%(msecs)03d %(levelname)s {%(module)s} [%(funcName)s] %(message)s', datefmt='%Y-%m-%d,%H:%M:%S')
     logging.info('logging initialized')
 
 def create_flask_app(income_manager=None):
@@ -52,7 +51,8 @@ def image_generator_to_http_adapter(image_generator):
 
 
 if __name__ == "__main__":
-    set_logging()
+    logging.basicConfig(format='%(asctime)s.%(msecs)03d %(levelname)s {%(module)s} [%(funcName)s] %(message)s', datefmt='%Y-%m-%d,%H:%M:%S')
+    logging.info('logging initialized')
     income_manager = IncomeManager()
     flask_app = create_flask_app(income_manager=income_manager)
     logging.info('flask started main')
