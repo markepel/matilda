@@ -22,11 +22,11 @@ class IncomeManager():
         self.handle_income()
 
     def start_listening(self):
-        server_socket = socket.socket()
-        server_socket.bind(('0.0.0.0', tilda_port))
-        server_socket.listen(0)
+        self.server_socket = socket.socket()
+        self.server_socket.bind(('0.0.0.0', tilda_port))
+        self.server_socket.listen(0)
         logging.info('start listening on port {}'.format(tilda_port))
-        self.income_connection = server_socket.accept()[0].makefile('rb')
+        self.income_connection = self.server_socket.accept()[0].makefile('rb')
         logging.info('connection accepted')
 
     def handle_income(self):
@@ -45,7 +45,7 @@ class IncomeManager():
         finally:
             logging.info('handle_income finally')
             self.income_connection.close()
-            server_socket.close()
+            self.server_socket.close()
     
     def handle_image(image_bytes):
         self.image_deque.append(image_bytes)
