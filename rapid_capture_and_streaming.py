@@ -11,9 +11,9 @@ logging.basicConfig(level=logging.INFO)
 try:
     client_socket = socket.socket()
     client_socket.connect((tilda_ip, tilda_port))
-    logging.info('connecting to {tilda_ip}:{tilda_port}...')
+    logging.info('connecting to {}:{}...'.format(tilda_ip, tilda_port))
     connection = client_socket.makefile('wb')
-    logging.info(f'connected to {tilda_ip}:{tilda_port}')
+    logging.info(f'connected to {}:{}'.format(tilda_ip, tilda_port))
 
     connection_lock = threading.Lock()
 

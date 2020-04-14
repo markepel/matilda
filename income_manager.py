@@ -26,25 +26,25 @@ class IncomeManager():
         server_socket.bind(('0.0.0.0', tilda_port))
         server_socket.listen(0)
         logging.info('start listening on port {}'.format(tilda_port))
-        connection = server_socket.accept()[0].makefile('rb')
+        self.income_connection = server_socket.accept()[0].makefile('rb')
         logging.info('connection accepted')
 
     def handle_income(self):
         try:
             logging.info('handle_income starts')
             while True:
-                image_len = struct.unpack('<L', connection.read(struct.calcsize('<L')))[0]
+                image_len = struct.unpack('<L', self.income_connection.read(struct.calcsize('<L')))[0]
                 if not image_len:
                     break
                 image_stream = io.BytesIO()
-                image_stream.write(connection.read(image_len))
+                image_stream.write(self.income_connection.read(image_len))
                 image_stream.seek(0)
                 self.handle_image(image_stream.read())
         except Exception as e:
             logging.info('handle_income Exception {}'.format(e))
         finally:
             logging.info('handle_income finally')
-            connection.close()
+            self.income_connection.close()
             server_socket.close()
     
     def handle_image(image_bytes):
