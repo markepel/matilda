@@ -38,8 +38,8 @@ def start_flask(income_manager=None):
                 time.sleep(0.1)
         except Exception as e:
             logging.info('Excepion in videobytes_feed {}'.format(e))
-
-
+    
+    logging.info('flask starting')
     app.run(host='0.0.0.0', port=5000, debug=True,
             threaded=True, use_reloader=False)
     logging.info('flask started')
@@ -56,7 +56,6 @@ if __name__ == "__main__":
     set_logging()
     income_manager = IncomeManager()
     start_flask(income_manager=income_manager)
+    logging.info('flask started main')
     image_receiver_thread = threading.Thread(target=income_manager.start_receiving)
-    flask_thread = threading.Thread(target=start_flask, args=(income_manager,))
-    flask_thread.start()
     image_receiver_thread.start()
