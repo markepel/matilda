@@ -12,7 +12,7 @@ class ImageGenerator():
         income_manager.subscribe_for_new_images(self)
 
     
-    def start():
+    def start(self):
         logger.info('ImageGenerator starts')
         start = time.time()
         finish = time.time()
@@ -28,5 +28,5 @@ class ImageGenerator():
         self.income_manager.unsubscribe_from_new_images(self)
     
 
-    def notify():
+    def notify(self):
         self.fresh_image_event.set()

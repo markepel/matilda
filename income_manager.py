@@ -14,12 +14,12 @@ class IncomeManager():
         self.image_deque =  deque(maxlen=50)
         self.subscribers = set()
     
-    def start_receiving():
+    def start_receiving(self):
         self.start_listening()
         time.sleep(2)
         handle_income()
 
-    def start_listening_on_port():
+    def start_listening_on_port(self):
         server_socket = socket.socket()
         server_socket.bind(('0.0.0.0', tilda_port))
         server_socket.listen(0)
@@ -27,7 +27,7 @@ class IncomeManager():
         connection = server_socket.accept()[0].makefile('rb')
         logger.info('connection accepted')
 
-    def handle_income():
+    def handle_income(self):
         try:
             logger.info('handle_income starts')
             while True:
@@ -49,7 +49,7 @@ class IncomeManager():
         self.image_deque.append(image_bytes)
         self.notify_subscribers()
     
-    def notify_subscribers():
+    def notify_subscribers(self):
         for subscriber in self.subscribers:
             try:
                 subscriber.notify()
@@ -57,11 +57,11 @@ class IncomeManager():
                 logger.info('Failed notify subscriber {}. removing from subscribers'.format(subscriber))
                 self.subscribers.remove(subscriber)
     
-    def get_last_image():
+    def get_last_image(self):
         return self.image_deque[-1]
     
-    def subscribe_for_new_images(subscriber):
+    def subscribe_for_new_images(self, subscriber):
         self.subscribers.add(subscriber)
 
-    def unsubscribe_from_new_images(subscriber):
+    def unsubscribe_from_new_images(self, subscriber):
         self.subscribers.remove(subscriber)
