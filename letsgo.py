@@ -21,7 +21,7 @@ def set_logger():
 
 def start_flask(income_manager=None):
     app = Flask(__name__)
-    
+
     @app.route("/video_feed")
     def video_feed():
         try:
@@ -35,7 +35,7 @@ def start_flask(income_manager=None):
         try:
             logger.info('Starting videobytes_feed feeding')
             for image in ImageGenerator(income_manager).start():
-            time.sleep(0.1)
+                time.sleep(0.1)
         except Exception as e:
             logger.info('Excepion in videobytes_feed {}'.format(e))
 
@@ -55,6 +55,5 @@ if __name__ == "__main__":
     set_logger()
     income_manager = IncomeManager()
     start_flask(income_manager=income_manager)
-    image_receiver_thread = threading.Thread(target=receive_images)
+    image_receiver_thread = threading.Thread(target=income_manager.start_receiving)
     image_receiver_thread.start()
-    income_manager.start_receiving()
