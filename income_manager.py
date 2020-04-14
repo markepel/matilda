@@ -41,13 +41,13 @@ class IncomeManager():
                 image_stream.seek(0)
                 self.handle_image(image_stream.read())
         except Exception as e:
-            logging.info('handle_income Exception {}'.format(e))
+            logging.error('handle_income Exception {}'.format(e))
         finally:
             logging.info('handle_income finally')
             self.income_connection.close()
             self.server_socket.close()
     
-    def handle_image(image_bytes):
+    def handle_image(self, image_bytes):
         self.image_deque.append(image_bytes)
         self.notify_subscribers()
     
