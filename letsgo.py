@@ -7,6 +7,9 @@ from flask import render_template
 import time
 import config
 import logging
+
+logging.basicConfig(format='%(message)s')
+logging.warning('This will get logged to a file')
 # logging.basicConfig(level=logging.INFO)
 import threading
 from income_manager import IncomeManager
@@ -51,7 +54,7 @@ def image_generator_to_http_adapter(image_generator):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(format='%(asctime)s.%(msecs)03d %(levelname)s {%(module)s} [%(funcName)s] %(message)s', datefmt='%Y-%m-%d,%H:%M:%S')
+    # logging.basicConfig(format='%(asctime)s.%(msecs)03d %(levelname)s {%(module)s} [%(funcName)s] %(message)s', datefmt='%Y-%m-%d,%H:%M:%S')
     logging.info('logging initialized')
     income_manager = IncomeManager()
     flask_app = create_flask_app(income_manager=income_manager)
