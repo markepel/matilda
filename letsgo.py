@@ -57,6 +57,5 @@ if __name__ == "__main__":
     income_manager = IncomeManager()
     start_flask(income_manager=income_manager)
     logging.info('flask started main')
-    print('flask started main')
     image_receiver_thread = threading.Thread(target=income_manager.start_receiving)
     image_receiver_thread.start()
