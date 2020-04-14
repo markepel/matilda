@@ -1,7 +1,7 @@
 import io
 import socket
 import struct
-from config import tilda_ip, tilda_port
+from config import tilda_port
 import logging
 logger = logging.getLogger(__name__) 
 import queue
