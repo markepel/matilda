@@ -1,7 +1,6 @@
 import io
 import socket
 import struct
-import tim
 from config import tilda_ip, tilda_port
 import logging
 logger = logging.getLogger(__name__) 
