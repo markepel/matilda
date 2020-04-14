@@ -20,7 +20,7 @@ class IncomeManager():
         time.sleep(2)
         handle_income()
 
-    def start_listening_on_port(self):
+    def start_listening(self):
         server_socket = socket.socket()
         server_socket.bind(('0.0.0.0', tilda_port))
         server_socket.listen(0)
