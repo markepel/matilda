@@ -7,17 +7,17 @@ from flask import render_template
 import time
 import config
 import logging
-logger = logging.getLogger(__name__) 
+logging.basicConfig(level=logging.DEBUG)
 import threading
 from income_manager import IncomeManager
 from image_generator import ImageGenerator
 
 
 
-def set_logger():
+def set_logging():
     FORMAT = '%(asctime)-15s %(message)s'
     logging.basicConfig(format=FORMAT)
-    print('logger initialized')
+    print('logging initialized')
 
 def start_flask(income_manager=None):
     app = Flask(__name__)
@@ -25,23 +25,23 @@ def start_flask(income_manager=None):
     @app.route("/video_feed")
     def video_feed():
         try:
-            logger.info('Starting video feeding')
+            logging.info('Starting video feeding')
             return Response(image_generator_to_http_adapter(ImageGenerator(income_manager).start()),mimetype = "multipart/x-mixed-replace; boundary=frame")
         except Exception as e:
-            logger.info('Excepion in video_feed {}'.format(e))
+            logging.info('Excepion in video_feed {}'.format(e))
 
     @app.route("/videobytes_feed")
     def videobytes_feed():
         try:
-            logger.info('Starting videobytes_feed feeding')
+            logging.info('Starting videobytes_feed feeding')
             for image in ImageGenerator(income_manager).start():
                 time.sleep(0.1)
         except Exception as e:
-            logger.info('Excepion in videobytes_feed {}'.format(e))
+            logging.info('Excepion in videobytes_feed {}'.format(e))
 
     app.run(host='0.0.0.0', port=5000, debug=True,
             threaded=True, use_reloader=False)
-    logger.info('flask started')
+    logging.info('flask started')
 
 
 def image_generator_to_http_adapter(image_generator):
@@ -52,7 +52,7 @@ def image_generator_to_http_adapter(image_generator):
 
 
 if __name__ == "__main__":
-    set_logger()
+    set_logging()
     income_manager = IncomeManager()
     start_flask(income_manager=income_manager)
     image_receiver_thread = threading.Thread(target=income_manager.start_receiving)

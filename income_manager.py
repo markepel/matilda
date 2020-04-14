@@ -3,7 +3,7 @@ import socket
 import struct
 from config import tilda_port
 import logging
-logger = logging.getLogger(__name__) 
+logging.basicConfig(level=logging.DEBUG)
 import queue
 from collections import deque
 import time
@@ -15,7 +15,7 @@ class IncomeManager():
         self.subscribers = set()
     
     def start_receiving(self):
-        logger.info('start_receiving')
+        logging.info('start_receiving')
         self.start_listening()
         time.sleep(2)
         handle_income()
@@ -24,13 +24,13 @@ class IncomeManager():
         server_socket = socket.socket()
         server_socket.bind(('0.0.0.0', tilda_port))
         server_socket.listen(0)
-        logger.info('start listening on port {}'.format(tilda_port))
+        logging.info('start listening on port {}'.format(tilda_port))
         connection = server_socket.accept()[0].makefile('rb')
-        logger.info('connection accepted')
+        logging.info('connection accepted')
 
     def handle_income(self):
         try:
-            logger.info('handle_income starts')
+            logging.info('handle_income starts')
             while True:
                 image_len = struct.unpack('<L', connection.read(struct.calcsize('<L')))[0]
                 if not image_len:
@@ -40,9 +40,9 @@ class IncomeManager():
                 image_stream.seek(0)
                 self.handle_image(image_stream.read())
         except Exception as e:
-            logger.info('handle_income Exception {}'.format(e))
+            logging.info('handle_income Exception {}'.format(e))
         finally:
-            logger.info('handle_income finally')
+            logging.info('handle_income finally')
             connection.close()
             server_socket.close()
     
@@ -55,7 +55,7 @@ class IncomeManager():
             try:
                 subscriber.notify()
             except:
-                logger.info('Failed notify subscriber {}. removing from subscribers'.format(subscriber))
+                logging.info('Failed notify subscriber {}. removing from subscribers'.format(subscriber))
                 self.subscribers.remove(subscriber)
     
     def get_last_image(self):
