@@ -12,7 +12,7 @@ import time
 class IncomeManager():
     def __init__(self):
         logging.info('Income Manager initialization')
-        self.image_deque =  deque(maxlen=50)
+        self.image_deque = deque(maxlen=50)
         self.subscribers = set()
     
     def start_receiving(self):
@@ -35,6 +35,7 @@ class IncomeManager():
             while True:
                 image_len = struct.unpack('<L', self.income_connection.read(struct.calcsize('<L')))[0]
                 if not image_len:
+                    logging.info('IncomeManager handle_income no image')
                     break
                 image_stream = io.BytesIO()
                 image_stream.write(self.income_connection.read(image_len))
