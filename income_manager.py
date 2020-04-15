@@ -29,7 +29,7 @@ class IncomeManager():
     def try_reconnect(self, count=50):
         for i in range(count):
             try:
-                time_sleep(5)
+                time.sleep(5)
                 logging.info("reconnecting. bye bye was a joke, man")
                 self.start_listening()
                 self.wait_on_connection()
