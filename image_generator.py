@@ -17,17 +17,11 @@ class ImageGenerator():
         start = time.time()
         finish = time.time()
         count = 0
-        # while finish - start < config.generation_period:
+        
         while True:
-            logging.info('ImageGenerator before wait')
-            # if count % 10 == 0: logging.info('ImageGenerator before wait')
             self.fresh_image_event.wait(20)
-            # if count % 10 == 0: logging.info('ImageGenerator after wait')
-            logging.info('ImageGenerator after wait')
             if self.fresh_image_event.is_set():
                 yield self.income_manager.get_last_image()
-                # if count % 10 == 0: logging.info('ImageGenerator yielded 10 new images')
-                logging.info('ImageGenerator yielded 10 new images')
                 self.fresh_image_event.clear()
                 count += 1
                 finish = time.time()
