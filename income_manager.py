@@ -18,15 +18,34 @@ class IncomeManager():
     def start_receiving(self):
         logging.info('start_receiving')
         self.start_listening()
+        self.wait_on_connection()
         time.sleep(2)
         self.handle_income()
         logging.info('start receiving(income manager thread) ends. bye bye')
+        self.try_reconnect(count=3)
+        logging.info('start_receiving (income manager thread) really ends. See ya')
+
+
+    def try_reconnect(self, count=50):
+        for i in range(count):
+            try:
+                time_sleep(5)
+                logging.info("reconnecting. bye bye was a joke, man")
+                self.start_listening()
+                self.wait_on_connection()
+                self.handle_income()
+            except Exception as e:
+                logging.error('try_reconnect start_listening Exception {}'.format(e), exc_info=True)
+            
+
 
     def start_listening(self):
         self.server_socket = socket.socket()
         self.server_socket.bind(('0.0.0.0', tilda_port))
         self.server_socket.listen(0)
         logging.info('start listening on port {}'.format(tilda_port))
+
+    def wait_on_connection(self):
         self.income_connection = self.server_socket.accept()[0].makefile('rb')
         logging.info('connection accepted')
 
@@ -43,7 +62,7 @@ class IncomeManager():
                 image_stream.seek(0)
                 self.handle_image(image_stream.read())
         except Exception as e:
-            logging.error('handle_income Exception {}'.format(e))
+            logging.error('handle_income Exception {}'.format(e), exc_info=True)
         finally:
             logging.info('handle_income finally')
             self.income_connection.close()
