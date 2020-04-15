@@ -69,7 +69,7 @@ class IncomeManager():
             self.server_socket.close()
     
     def handle_image(self, image_bytes):
-        logging.info('handling new image with image len {}'.format(len(image_bytes)))
+        # logging.info('handling new image with image len {}'.format(len(image_bytes)))
         self.image_deque.append(image_bytes)
         self.notify_subscribers()
     
