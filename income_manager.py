@@ -20,6 +20,7 @@ class IncomeManager():
         self.start_listening()
         time.sleep(2)
         self.handle_income()
+        logging.info('start receiving(income manager thread) ends. bye bye')
 
     def start_listening(self):
         self.server_socket = socket.socket()
