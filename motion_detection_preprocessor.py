@@ -1,7 +1,7 @@
 import datetime
 import numpy as np
 import imutils
-import cv2 as cv2
+import cv2
 import logging
 from single_motion_detector import SingleMotionDetector
 
@@ -16,7 +16,7 @@ class MotionDetectionProcessor():
         # total = 0
         # while True:
         nparr = np.fromstring(image, np.uint8)
-        image = cv2.imdecode(nparr, cv2.CV_LOAD_IMAGE_COLOR)
+        image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
         image = imutils.resize(image, width=400)
         logging.info('MotionDetectionProcessor image of type {}'.format(type(image)))
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
