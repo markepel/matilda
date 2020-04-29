@@ -21,6 +21,7 @@ class MotionDetectionProcessor():
     def process(self, image):
         # total = 0
         # while True:
+        motion_detected = False
         nparr = np.fromstring(image, np.uint8)
         image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
         image = imutils.resize(image, width=400)
@@ -30,16 +31,16 @@ class MotionDetectionProcessor():
         # logging.info('MotionDetectionProcessor gray of type {}'.format(type(gray)))
         timestamp = datetime.datetime.now()
         cv2.putText(image, timestamp.strftime("%A %d %B %Y %I:%M:%S%p"), (10, image.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
-        motion = None
         if self.detection_count <= self.background_model_frame_count:
             self.detection_count += 1
         else:
             motion = self.motion_detector.detect(gray)
             if motion is not None:
+                motion_detected = True
                 (thresh, (minX, minY, maxX, maxY)) = motion
                 cv2.rectangle(image, (minX, minY), (maxX, maxY),(0, 0, 255), 2)
         (flag, encodedImage) = cv2.imencode(".jpg", image)
-        if motion is not None:
+        if motion_detected:
             self.thread_executor.submit(send_image, encodedImage)
         return bytearray(encodedImage)
 
