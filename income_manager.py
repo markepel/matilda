@@ -43,7 +43,7 @@ class IncomeManager():
         self.server_socket = socket.socket()
         self.server_socket.bind(('0.0.0.0', config.tilda_port))
         self.server_socket.listen(0)
-        logging.info('start listening on port {}'.format(tilda_port))
+        logging.info('start listening on port {}'.format(config.tilda_port))
 
     def wait_on_connection(self):
         self.income_connection = self.server_socket.accept()[0].makefile('rb')
