@@ -40,6 +40,7 @@ class MotionDetectionProcessor():
                 (thresh, (minX, minY, maxX, maxY)) = motion
                 cv2.rectangle(image, (minX, minY), (maxX, maxY),(0, 0, 255), 2)
         (flag, encodedImage) = cv2.imencode(".jpg", image)
+        self.motion_detector.update(gray)
         if motion_detected:
             self.thread_executor.submit(send_image, encodedImage)
         return bytearray(encodedImage)
