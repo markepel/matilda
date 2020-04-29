@@ -34,4 +34,4 @@ class MotionDetectionProcessor():
                     (0, 0, 255), 2)
         self.motion_detector.update(gray)
         (flag, encodedImage) = cv2.imencode(".jpg", image)
-        return encodedImage
+        return bytearray(encodedImage)
