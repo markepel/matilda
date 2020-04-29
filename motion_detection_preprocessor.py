@@ -15,6 +15,8 @@ class MotionDetectionProcessor():
     def process(self, image):
         # total = 0
         # while True:
+        nparr = np.fromstring(image, np.uint8)
+        image = cv2.imdecode(nparr, cv2.CV_LOAD_IMAGE_COLOR)
         image = imutils.resize(image, width=400)
         logging.info('MotionDetectionProcessor image of type {}'.format(type(image)))
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
