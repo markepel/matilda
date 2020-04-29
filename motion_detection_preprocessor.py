@@ -33,7 +33,7 @@ class MotionDetectionProcessor():
             if motion is not None:
                 (thresh, (minX, minY, maxX, maxY)) = motion
                 cv2.rectangle(image, (minX, minY), (maxX, maxY),(0, 0, 255), 2)
-                requests.get(url ="https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}".format(TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'test motion detection')
+                requests.get(url ="https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}".format(TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'test motion detection'))
         self.motion_detector.update(gray)
         (flag, encodedImage) = cv2.imencode(".jpg", image)
         return bytearray(encodedImage)
