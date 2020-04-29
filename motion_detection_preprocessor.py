@@ -12,7 +12,7 @@ class MotionDetectionProcessor():
         self.motion_detector = SingleMotionDetector(accumWeight=0.1)
         self.detection_count = 0
     
-    def process(image):
+    def process(self, image):
         # total = 0
         # while True:
         image = imutils.resize(image, width=400)
