@@ -42,7 +42,8 @@ class MotionDetectionProcessor():
         (flag, encodedImage) = cv2.imencode(".jpg", image)
         self.motion_detector.update(gray)
         if motion_detected:
-            self.thread_executor.submit(send_image, bytearray(encodedImage))
+            send_image(bytearray(encodedImage))
+            # self.thread_executor.submit(send_image, bytearray(encodedImage))
         return bytearray(encodedImage)
 
 def send_image(image):
