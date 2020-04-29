@@ -42,12 +42,12 @@ class MotionDetectionProcessor():
         (flag, encodedImage) = cv2.imencode(".jpg", image)
         self.motion_detector.update(gray)
         if motion_detected:
-            send_image(encodedImage)
+            send_image(bytearray(encodedImage))
             # self.thread_executor.submit(send_image, bytearray(encodedImage))
         return bytearray(encodedImage)
 
 def send_image(image):
-    files = {'media': image}
+    files = {'image': ('IMAGENAME.jpg',image,'multipart/form-data',{'Expires': '0'})}
     res = requests.post("https://api.telegram.org/bot{}/sendPhoto?chat_id={}&caption={}".format(TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), files=files)
     logging.info(res.json())
 
