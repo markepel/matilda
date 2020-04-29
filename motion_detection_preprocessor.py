@@ -6,13 +6,17 @@ import logging
 from single_motion_detector import SingleMotionDetector
 import requests
 from privateconfig import TELEGRAM_BOT_API_KEY, TELEGRAM_BOT_NAME, MARK_CHAT_ID
+import config
+from multiprocessing.pool import ThreadPool
+from concurrent.futures import ThreadPoolExecutor
 
 class MotionDetectionProcessor():
     def __init__(self, operational_image_width=400, background_model_frame_count=30):
         self.operational_image_width = operational_image_width
         self.background_model_frame_count = background_model_frame_count
-        self.motion_detector = SingleMotionDetector(accumWeight=0.1)
+        self.motion_detector = SingleMotionDetector(accumWeight=config.motion_detection_accum_weight)
         self.detection_count = 0
+        self.thread_executor = ThreadPoolExecutor(max_workers=2)
     
     def process(self, image):
         # total = 0
@@ -33,7 +37,8 @@ class MotionDetectionProcessor():
             if motion is not None:
                 (thresh, (minX, minY, maxX, maxY)) = motion
                 cv2.rectangle(image, (minX, minY), (maxX, maxY),(0, 0, 255), 2)
-                requests.get(url ="https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}".format(TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'test motion detection'))
+                self.thread_executor.submit(requests.get, "https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}".format(TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'test motion detection'))
+                # requests.get("https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}".format(TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'test motion detection'))
         self.motion_detector.update(gray)
         (flag, encodedImage) = cv2.imencode(".jpg", image)
         return bytearray(encodedImage)
