@@ -4,6 +4,8 @@ import imutils
 import cv2
 import logging
 from single_motion_detector import SingleMotionDetector
+import requests
+from privateconfig import TELEGRAM_BOT_API_KEY, TELEGRAM_BOT_NAME, MARK_CHAT_ID
 
 class MotionDetectionProcessor():
     def __init__(self, operational_image_width=400, background_model_frame_count=30):
@@ -30,8 +32,8 @@ class MotionDetectionProcessor():
             motion = self.motion_detector.detect(gray)
             if motion is not None:
                 (thresh, (minX, minY, maxX, maxY)) = motion
-                cv2.rectangle(image, (minX, minY), (maxX, maxY),
-                    (0, 0, 255), 2)
+                cv2.rectangle(image, (minX, minY), (maxX, maxY),(0, 0, 255), 2)
+                requests.get(url ="https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}".format(TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'test motion detection')
         self.motion_detector.update(gray)
         (flag, encodedImage) = cv2.imencode(".jpg", image)
         return bytearray(encodedImage)
