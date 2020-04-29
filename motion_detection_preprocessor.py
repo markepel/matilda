@@ -48,7 +48,7 @@ class MotionDetectionProcessor():
 
 def send_image(image):
     files = {'image': ('IMAGENAME.jpg',image,'multipart/form-data',{'Expires': '0'})}
-    res = requests.post("https://api.telegram.org/bot{}/sendPhoto?chat_id={}&caption={}".format(TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), files=files)
+    res = requests.post("https://api.telegram.org/bot{}/sendPhoto?photo={}&chat_id={}&caption={}".format(image, TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), files=files)
     logging.info(res.json())
 
 
