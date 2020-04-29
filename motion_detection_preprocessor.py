@@ -1,7 +1,7 @@
 import datetime
 import numpy as np
 import imutils
-import cv2
+import cv2 as cv2
 import logging
 from single_motion_detector import SingleMotionDetector
 
