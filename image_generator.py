@@ -3,7 +3,8 @@ import config
 import logging
 # logging.basicConfig(level=logging.INFO)
 import threading
-
+import imutils
+import cv2
 
 class ImageGenerator():
     def __init__(self, income_manager):

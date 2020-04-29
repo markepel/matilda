@@ -11,6 +11,7 @@ logging.basicConfig(format='%(asctime)s.%(msecs)03d %(levelname)s {%(module)s} [
 import threading
 from income_manager import IncomeManager
 from image_generator import ImageGenerator
+from motion_detection_preprocessor import MotionDetectionProcessor
 
 
 def create_flask_app(income_manager=None):
@@ -46,7 +47,7 @@ def image_generator_to_http_adapter(image_generator):
 
 
 if __name__ == "__main__":
-    income_manager = IncomeManager()
+    income_manager = IncomeManager(MotionDetectionProcessor())
     flask_app = create_flask_app(income_manager=income_manager)
     logging.info('flask started main')
     image_receiver_thread = threading.Thread(target=income_manager.start_receiving)

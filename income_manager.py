@@ -1,19 +1,19 @@
 import io
 import socket
 import struct
-from config import tilda_port
+from config 
 import logging
-# logging.basicConfig(level=logging.INFO)
 import queue
 from collections import deque
 import time
 
 
 class IncomeManager():
-    def __init__(self):
+    def __init__(self, preprocessor):
         logging.info('Income Manager initialization')
         self.image_deque = deque(maxlen=50)
         self.subscribers = set()
+        self.preprocessor = preprocessor
     
     def start_receiving(self):
         logging.info('start_receiving')
@@ -22,15 +22,15 @@ class IncomeManager():
         time.sleep(2)
         self.handle_income()
         logging.info('start receiving(income manager thread) ends. bye bye')
-        self.try_reconnect(count=3)
+        self.try_reconnect(count=300)
         logging.info('start_receiving (income manager thread) really ends. See ya')
 
 
     def try_reconnect(self, count=50):
         for i in range(count):
             try:
-                time.sleep(5)
                 logging.info("reconnecting. bye bye was a joke, man")
+                time.sleep(5)
                 self.start_listening()
                 self.wait_on_connection()
                 self.handle_income()
@@ -41,7 +41,7 @@ class IncomeManager():
 
     def start_listening(self):
         self.server_socket = socket.socket()
-        self.server_socket.bind(('0.0.0.0', tilda_port))
+        self.server_socket.bind(('0.0.0.0', config.tilda_port))
         self.server_socket.listen(0)
         logging.info('start listening on port {}'.format(tilda_port))
 
@@ -70,7 +70,10 @@ class IncomeManager():
     
     def handle_image(self, image_bytes):
         # logging.info('handling new image with image len {}'.format(len(image_bytes)))
-        self.image_deque.append(image_bytes)
+        logging.info('Income manager handle_image of type {}'.format(type(image_bytes)))
+        processed_image = self.preprocessor.process(image_bytes)
+        logging.info('Income manager processed_image of type {}'.format(type(processed_image)))
+        self.image_deque.append(processed_image)
         self.notify_subscribers()
     
     def notify_subscribers(self):
