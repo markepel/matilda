@@ -43,12 +43,15 @@ class MotionDetectionProcessor():
         self.motion_detector.update(gray)
         if motion_detected:
             send_image(bytearray(encodedImage))
+            send_image(encodedImage)
             # self.thread_executor.submit(send_image, bytearray(encodedImage))
         return bytearray(encodedImage)
 
 def send_image(image):
-    files = {'image': ('IMAGENAME.jpg',image,'multipart/form-data',{'Expires': '0'})}
-    res = requests.post("https://api.telegram.org/bot{}/sendPhoto?photo={}&chat_id={}&caption={}".format(image, TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), files=files)
+    files = {'image': ('IMAGENAME.jpg',image,'multipart/form-data')}
+    res1 = requests.post("https://api.telegram.org/bot{}/sendPhoto?photo={}&chat_id={}&caption={}".format(image, TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), data=files)
+    res2 = requests.post("https://api.telegram.org/bot{}/sendPhoto?photo={}&chat_id={}&caption={}".format(image, TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), files=files)
+    logging.info(res1.json())
     logging.info(res.json())
 
 
