@@ -30,6 +30,7 @@ class MotionDetectionProcessor():
         # logging.info('MotionDetectionProcessor gray of type {}'.format(type(gray)))
         timestamp = datetime.datetime.now()
         cv2.putText(image, timestamp.strftime("%A %d %B %Y %I:%M:%S%p"), (10, image.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
+        motion = None
         if self.detection_count <= self.background_model_frame_count:
             self.detection_count += 1
         else:
@@ -37,8 +38,16 @@ class MotionDetectionProcessor():
             if motion is not None:
                 (thresh, (minX, minY, maxX, maxY)) = motion
                 cv2.rectangle(image, (minX, minY), (maxX, maxY),(0, 0, 255), 2)
-                self.thread_executor.submit(requests.get, "https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}".format(TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'test motion detection'))
-                # requests.get("https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}".format(TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'test motion detection'))
-        self.motion_detector.update(gray)
         (flag, encodedImage) = cv2.imencode(".jpg", image)
+        if motion is not None:
+            self.thread_executor.submit(send_image, encodedImage)
         return bytearray(encodedImage)
+
+def send_image(image):
+    files = {'media': image}
+    requests.post("https://api.telegram.org/bot{}/sendPhoto?chat_id={}&caption={}".format(TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), files=files)
+
+
+
+
+
