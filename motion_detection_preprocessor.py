@@ -18,10 +18,10 @@ class MotionDetectionProcessor():
         nparr = np.fromstring(image, np.uint8)
         image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
         image = imutils.resize(image, width=400)
-        logging.info('MotionDetectionProcessor image of type {}'.format(type(image)))
+        # logging.info('MotionDetectionProcessor image of type {}'.format(type(image)))
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
-        logging.info('MotionDetectionProcessor gray of type {}'.format(type(gray)))
+        # logging.info('MotionDetectionProcessor gray of type {}'.format(type(gray)))
         timestamp = datetime.datetime.now()
         cv2.putText(image, timestamp.strftime("%A %d %B %Y %I:%M:%S%p"), (10, image.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
         if self.detection_count <= self.background_model_frame_count:
@@ -33,4 +33,5 @@ class MotionDetectionProcessor():
                 cv2.rectangle(image, (minX, minY), (maxX, maxY),
                     (0, 0, 255), 2)
         self.motion_detector.update(gray)
-        return image
+        (flag, encodedImage) = cv2.imencode(".jpg", image)
+        return encodedImage
