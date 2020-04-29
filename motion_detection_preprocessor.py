@@ -32,5 +32,5 @@ class MotionDetectionProcessor():
                 (thresh, (minX, minY, maxX, maxY)) = motion
                 cv2.rectangle(image, (minX, minY), (maxX, maxY),
                     (0, 0, 255), 2)
-        motion_detector.update(gray)
+        self.motion_detector.update(gray)
         return image
