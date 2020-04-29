@@ -70,8 +70,10 @@ class IncomeManager():
     
     def handle_image(self, image_bytes):
         # logging.info('handling new image with image len {}'.format(len(image_bytes)))
-        logging.info('Income manager handle_image of type {}'.format(type(image_bytes)))
-        processed_image = self.preprocessor.process(image_bytes)
+        nparr = np.fromstring(image_bytes, np.uint8)
+        img_np = cv2.imdecode(nparr, cv2.CV_LOAD_IMAGE_COLOR)
+        logging.info('Income manager handle_image of type {}'.format(type(img_np)))
+        processed_image = self.preprocessor.process(img_np)
         logging.info('Income manager processed_image of type {}'.format(type(processed_image)))
         self.image_deque.append(processed_image)
         self.notify_subscribers()
