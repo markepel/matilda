@@ -27,7 +27,7 @@ class MotionDetectionProcessor():
         if self.detection_count <= self.background_model_frame_count:
             self.detection_count += 1
         else:
-            motion = motion_detector.detect(gray)
+            motion = self.motion_detector.detect(gray)
             if motion is not None:
                 (thresh, (minX, minY, maxX, maxY)) = motion
                 cv2.rectangle(image, (minX, minY), (maxX, maxY),
