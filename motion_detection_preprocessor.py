@@ -3,6 +3,7 @@ import numpy as np
 import imutils
 import cv2
 import logging
+from single_motion_detector import SingleMotionDetector
 
 class MotionDetectionProcessor():
     def __init__(self, operational_image_width=400, background_model_frame_count=30):
