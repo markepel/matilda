@@ -1,7 +1,7 @@
 import io
 import socket
 import struct
-from config import *
+import config
 import logging
 import queue
 from collections import deque
