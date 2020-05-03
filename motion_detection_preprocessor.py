@@ -55,16 +55,20 @@ class MotionDetectionProcessor():
 def send_image(image):
     # files = {'image': ('IMAGENAME.jpg',image,'multipart/form-data')}
     # files2 = {'media': image}
+    image.name = 'img.jpg'
+    files = {'photo': image}
+    data = {'chat_id' : '{}'.format(MARK_CHAT_ID)}
+
+    # files = {
+    #     'chat_id': '{}'.format(MARK_CHAT_ID),
+    #     'caption': 'test requests',
+    #     'photo': ('f.jpg', f_image.read()),
+    # }
     try:
-        files = {
-        'chat_id': '{}'.format(MARK_CHAT_ID),
-        'caption': 'test requests',
-        'photo': ('f.jpg', image.read()),
-    }
-        response = requests.post('https://api.telegram.org/bot{}/sendPhoto'.format(TELEGRAM_BOT_API_KEY), files=files)
+        response = requests.post('https://api.telegram.org/bot{}/sendPhoto'.format(TELEGRAM_BOT_API_KEY), files=files, data=data)
         logging.info(response.json())
-    except Exception as e:
-        logging.exception('exception on requests phto')
+    except:
+        logging.info('exception on requests phto')
         pass
     # try:
     #     res1 = requests.post("https://api.telegram.org/bot{}/sendPhoto?photo={}&chat_id={}&caption={}".format(image, TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), data=files)
