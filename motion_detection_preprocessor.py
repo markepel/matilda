@@ -43,24 +43,28 @@ class MotionDetectionProcessor():
         (flag, encodedImage) = cv2.imencode(".jpg", image)
         self.motion_detector.update(gray)
         if motion_detected:
-            f_image = io.BytesIO(bytearray(encodedImage))
+            logging.info('motion detected')
+            try:
+                f_image = io.BytesIO(bytearray(encodedImage))
+            except:
+                logging.info('exception in mtion')
+                raise
             self.thread_executor.submit(send_image, f_image)
         return bytearray(encodedImage)
 
 def send_image(image):
     # files = {'image': ('IMAGENAME.jpg',image,'multipart/form-data')}
     # files2 = {'media': image}
-
-    files = {
+    try:
+        files = {
         'chat_id': '{}'.format(MARK_CHAT_ID),
         'caption': 'test requests',
-        'photo': ('f.jpg', f_image.read()),
+        'photo': ('f.jpg', image.read()),
     }
-    try:
         response = requests.post('https://api.telegram.org/bot{}/sendPhoto'.format(TELEGRAM_BOT_API_KEY), files=files)
         logging.info(response.json())
-    except:
-        logging.info('exception on requests phto')
+    except Exception as e:
+        logging.exception('exception on requests phto')
         pass
     # try:
     #     res1 = requests.post("https://api.telegram.org/bot{}/sendPhoto?photo={}&chat_id={}&caption={}".format(image, TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), data=files)
