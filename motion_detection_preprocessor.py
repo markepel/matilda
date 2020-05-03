@@ -56,10 +56,13 @@ def send_image(image):
         'caption': 'test requests',
         'photo': ('f.jpg', f_image.read()),
     }
-
-    response = requests.post('https://api.telegram.org/bot{}/sendPhoto'.format(TELEGRAM_BOT_API_KEY), files=files)
+    try:
+        response = requests.post('https://api.telegram.org/bot{}/sendPhoto'.format(TELEGRAM_BOT_API_KEY), files=files)
+        logging.info(response.json())
+    except:
+        pass
     # try:
-    #     res1 = requests.post("https://api.telegram.org/bot{}/sendPhoto".format(image, TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), data=files)
+    #     res1 = requests.post("https://api.telegram.org/bot{}/sendPhoto?photo={}&chat_id={}&caption={}".format(image, TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), data=files)
     #     logging.info(res1.json())
     # except:
     #     pass
