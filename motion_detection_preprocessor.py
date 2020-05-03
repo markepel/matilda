@@ -52,7 +52,7 @@ def send_image(image_bytes):
     try:
         f_image = io.BytesIO(image_bytes)
         image.name = 'img.jpg'
-        files = {'photo': f_image}
+        files = {'photo': f_image.read()}
         data = {'chat_id' : '{}'.format(MARK_CHAT_ID), 'caption': 'Motion detected'}
         response = requests.post('https://api.telegram.org/bot{}/sendPhoto'.format(TELEGRAM_BOT_API_KEY), files=files, data=data)
         logging.info(response.json())
