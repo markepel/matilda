@@ -42,45 +42,23 @@ class MotionDetectionProcessor():
                 cv2.rectangle(image, (minX, minY), (maxX, maxY),(0, 0, 255), 2)
         (flag, encodedImage) = cv2.imencode(".jpg", image)
         self.motion_detector.update(gray)
+        output_image = bytearray(encodedImage)
         if motion_detected:
             logging.info('motion detected')
-            try:
-                f_image = io.BytesIO(bytearray(encodedImage))
-            except:
-                logging.info('exception in mtion')
-                raise
-            self.thread_executor.submit(send_image, f_image)
+            self.thread_executor.submit(send_image, output_image)
         return bytearray(encodedImage)
 
-def send_image(image):
-    # files = {'image': ('IMAGENAME.jpg',image,'multipart/form-data')}
-    # files2 = {'media': image}
-    image.name = 'img.jpg'
-    files = {'photo': image}
-    data = {'chat_id' : '{}'.format(MARK_CHAT_ID)}
-
-    # files = {
-    #     'chat_id': '{}'.format(MARK_CHAT_ID),
-    #     'caption': 'test requests',
-    #     'photo': ('f.jpg', f_image.read()),
-    # }
+def send_image(image_bytes):
     try:
+        f_image = io.BytesIO(image_bytes)
+        image.name = 'img.jpg'
+        files = {'photo': f_image}
+        data = {'chat_id' : '{}'.format(MARK_CHAT_ID), 'caption': 'Motion detected'}
         response = requests.post('https://api.telegram.org/bot{}/sendPhoto'.format(TELEGRAM_BOT_API_KEY), files=files, data=data)
         logging.info(response.json())
     except:
-        logging.info('exception on requests phto')
+        logging.info('exception on requests send_image')
         pass
-    # try:
-    #     res1 = requests.post("https://api.telegram.org/bot{}/sendPhoto?photo={}&chat_id={}&caption={}".format(image, TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), data=files)
-    #     logging.info(res1.json())
-    # except:
-    #     pass
-    # try:
-    #     res2 = requests.post("https://api.telegram.org/bot{}/sendPhoto?photo={}&chat_id={}&caption={}".format(image, TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), files=files)
-    #     logging.info(res2.json())
-    # except:
-    #     pass
-    # try:
 
 
 
