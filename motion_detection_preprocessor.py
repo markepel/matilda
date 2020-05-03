@@ -60,6 +60,7 @@ def send_image(image):
         response = requests.post('https://api.telegram.org/bot{}/sendPhoto'.format(TELEGRAM_BOT_API_KEY), files=files)
         logging.info(response.json())
     except:
+        logging.info('exception on requests phto')
         pass
     # try:
     #     res1 = requests.post("https://api.telegram.org/bot{}/sendPhoto?photo={}&chat_id={}&caption={}".format(image, TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), data=files)
