@@ -9,6 +9,7 @@ from privateconfig import TELEGRAM_BOT_API_KEY, TELEGRAM_BOT_NAME, MARK_CHAT_ID
 import config
 from multiprocessing.pool import ThreadPool
 from concurrent.futures import ThreadPoolExecutor
+import io
 
 class MotionDetectionProcessor():
     def __init__(self, operational_image_width=400, background_model_frame_count=30):
@@ -42,17 +43,34 @@ class MotionDetectionProcessor():
         (flag, encodedImage) = cv2.imencode(".jpg", image)
         self.motion_detector.update(gray)
         if motion_detected:
-            send_image(bytearray(encodedImage))
-            send_image(encodedImage)
-            # self.thread_executor.submit(send_image, bytearray(encodedImage))
+            f_image = io.BytesIO(bytearray(encodedImage))
+            self.thread_executor.submit(send_image, f_image)
         return bytearray(encodedImage)
 
 def send_image(image):
-    files = {'image': ('IMAGENAME.jpg',image,'multipart/form-data')}
-    res1 = requests.post("https://api.telegram.org/bot{}/sendPhoto?photo={}&chat_id={}&caption={}".format(image, TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), data=files)
-    res2 = requests.post("https://api.telegram.org/bot{}/sendPhoto?photo={}&chat_id={}&caption={}".format(image, TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), files=files)
-    logging.info(res1.json())
-    logging.info(res.json())
+    # files = {'image': ('IMAGENAME.jpg',image,'multipart/form-data')}
+    # files2 = {'media': image}
+
+    files = {
+        'chat_id': '{}'.format(MARK_CHAT_ID),
+        'caption': 'test requests',
+        'photo': ('f.jpg', f_image.read()),
+    }
+
+    response = requests.post('https://api.telegram.org/bot{}/sendPhoto'.format(TELEGRAM_BOT_API_KEY), files=files)
+    # try:
+    #     res1 = requests.post("https://api.telegram.org/bot{}/sendPhoto".format(image, TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), data=files)
+    #     logging.info(res1.json())
+    # except:
+    #     pass
+    # try:
+    #     res2 = requests.post("https://api.telegram.org/bot{}/sendPhoto?photo={}&chat_id={}&caption={}".format(image, TELEGRAM_BOT_API_KEY, MARK_CHAT_ID, 'photo motion detection'), files=files)
+    #     logging.info(res2.json())
+    # except:
+    #     pass
+    # try:
+
+
 
 
 
