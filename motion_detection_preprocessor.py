@@ -27,7 +27,7 @@ class MotionDetectionProcessor():
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
         timestamp = datetime.datetime.now()
-        cv2.putText(image, timestamp.strftime("%A %d %B %Y %I:%M:%S%p"), (10, image.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
+        cv2.putText(image, timestamp.strftime("%A %d %B %Y %I:%M:%S%p"), (10, image.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (96, 255, 71), 1)
         if self.detection_count <= self.background_model_frame_count:
             self.detection_count += 1
         else:
@@ -35,7 +35,7 @@ class MotionDetectionProcessor():
             if motion is not None:
                 motion_detected = True
                 (thresh, (minX, minY, maxX, maxY)) = motion
-                cv2.rectangle(image, (minX, minY), (maxX, maxY),(0, 0, 255), 2)
+                cv2.rectangle(image, (minX, minY), (maxX, maxY),(96, 255, 71), 1)
         (flag, encodedImage) = cv2.imencode(".jpg", image)
         self.motion_detector.update(gray)
         output_image = bytearray(encodedImage)
