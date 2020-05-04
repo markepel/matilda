@@ -35,7 +35,7 @@ class MotionDetectionProcessor():
             if motion is not None:
                 motion_detected = True
                 (thresh, (minX, minY, maxX, maxY)) = motion
-                cv2.rectangle(image, (minX, minY), (maxX, maxY),(96, 255, 71), 1)
+                cv2.rectangle(image, (minX, minY), (maxX, maxY),(96, 255, 71), 2)
         (flag, encodedImage) = cv2.imencode(".jpg", image)
         self.motion_detector.update(gray)
         output_image = bytearray(encodedImage)
