@@ -4,10 +4,10 @@ import imutils
 import cv2
 
 class SingleMotionDetector:
-	def __init__(self, accumWeight=0.5):
+	def __init__(self, accumWeight=0.5, min_area=100):
 		# store the accumulated weight factor
 		self.accumWeight = accumWeight
-
+		self.min_area = min_area
 		# initialize the background model
 		self.bg = None
 
@@ -46,6 +46,8 @@ class SingleMotionDetector:
 
 		# otherwise, loop over the contours
 		for c in cnts:
+			if cv2.contourArea(c) < self.min_area:
+				continue
 			# compute the bounding box of the contour and use it to
 			# update the minimum and maximum bounding box regions
 			(x, y, w, h) = cv2.boundingRect(c)

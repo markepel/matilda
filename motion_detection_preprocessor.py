@@ -15,7 +15,7 @@ class MotionDetectionProcessor():
     def __init__(self, operational_image_width=400, background_model_frame_count=30):
         self.operational_image_width = operational_image_width
         self.background_model_frame_count = background_model_frame_count
-        self.motion_detector = SingleMotionDetector(accumWeight=config.motion_detection_accum_weight)
+        self.motion_detector = SingleMotionDetector(accumWeight=config.motion_detection_accum_weight, min_area=config.min_motion_area)
         self.detection_count = 0
         self.thread_executor = ThreadPoolExecutor(max_workers=2)
     
