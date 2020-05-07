@@ -45,9 +45,12 @@ class SingleMotionDetector:
 			return None
 
 		# otherwise, loop over the contours
+
+		less_then_min_counter = 0
 		for c in cnts:
 			if cv2.contourArea(c) < self.min_area:
-				return None
+				less_then_min_counter += 1
+				continue
 			# compute the bounding box of the contour and use it to
 			# update the minimum and maximum bounding box regions
 			(x, y, w, h) = cv2.boundingRect(c)
@@ -56,4 +59,5 @@ class SingleMotionDetector:
 
 		# otherwise, return a tuple of the thresholded image along
 		# with bounding box
+		if len(cnts) == less_then_min_counter: return None
 		return (thresh, (minX, minY, maxX, maxY))
